@@ -11,7 +11,7 @@ import time
 
 root = Tk()
 root.title("Budgeting app")
-canvas = Canvas(root, width = 800, height = 400)
+canvas = Canvas(root, width = 600, height = 300)
 
 def budget_goal_set():
     conn = sqlite3.connect('budgeting.db') # Connect to or create a new database named 'budgeting.db'
@@ -34,12 +34,12 @@ def budget_goal_set_page():
     return_to_main_menu = Button(root,text = "Return To Main Menu",command=mainpage)
     canvas.create_window(100,50,window =return_to_main_menu)
     budget_goal_label = Label(root,text="Enter a new budegt goal")
-    canvas.create_window(100,150,window=budget_goal_label)
+    canvas.create_window(230,150,window=budget_goal_label)
     global budget_goal_entry_box
     budget_goal_entry_box = Entry(root,width=20)
-    canvas.create_window(100,200,window=budget_goal_entry_box)
+    canvas.create_window(230,200,window=budget_goal_entry_box)
     budget_goal_button = Button(root,text="Set Budget",command=budget_goal_set)
-    canvas.create_window(100,250,window=budget_goal_button)
+    canvas.create_window(230,250,window=budget_goal_button)
     canvas.pack()
 
 
@@ -80,9 +80,9 @@ def sql_save_expense():
 
 #generating the graphs
 def generate_report():
+    mainpage()
+
        # Connect to the SQLite database and retrieve the data
-    return_to_main_menu = Button(root,text = "Return To Main Menu",command=mainpage)
-    canvas.create_window(100,50,window =return_to_main_menu)
     conn = sqlite3.connect("budgeting.db")
     income_query = "SELECT amount, date, time FROM income"
     expense_query = "SELECT amount, date, time FROM expenses"
@@ -170,6 +170,7 @@ def view_transactions():
     canvas.configure(yscrollcommand=scrollbar.set)
 
     # Create a frame to hold the transactions
+    global frame
     frame = tk.Frame(canvas)
     frame.place(relwidth=1, relheight=1)
 
@@ -184,7 +185,6 @@ def view_transactions():
 
 #Main Page 
 def mainpage():
-
     for item in canvas.find_all():
         canvas.delete(item)
     View_transaction = Button(root,text = "View Transactions", command= view_transactions)
